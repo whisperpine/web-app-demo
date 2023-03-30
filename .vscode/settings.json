@@ -8,5 +8,6 @@
         "**/Thumbs.db": true,
         "bin/": true,
         "obj/": true,
-    }
+    },
+    "codesnap.showWindowTitle": true
 }
