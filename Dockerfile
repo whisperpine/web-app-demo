@@ -1,3 +1,6 @@
+# .NET SDK 官方镜像:
+# https://mcr.microsoft.com/product/dotnet/sdk/about
+
 # 使用微软官方的 .NET6 SDK 容器镜像来编译此工程
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS builder
 # 设置工作目录为容器内的 /src 路径
@@ -13,11 +16,14 @@ RUN dotnet publish -c Release -o /publish
 
 # 使用微软官方的 .NET6 Runtime 容器镜像作为基础来制作用于发布的镜像
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 as runtime
+# 如果运行时不需要 AST.NET Runtime, 则可以使用更小的镜像:
+# FROM mcr.microsoft.com/dotnet/runtime:6.0 as runtime
+
 # 将容器内的 /publish 路径设置为工作路径
 WORKDIR /publish
 # 将那些在上一个容器中被编译好的文件，复制到新的容器的工作路径中
 COPY --from=builder /publish .
 # 暴露 3000 端口
 EXPOSE 3000
-# 在工作目录中执行 dotnet WebDemo.dll 命令
-CMD [ "dotnet", "WebDemo.dll" ]
+# 在工作目录中执行 dotnet WebApp.dll 命令
+CMD [ "dotnet", "WebApp.dll" ]
