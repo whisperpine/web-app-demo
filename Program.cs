@@ -51,8 +51,9 @@ internal class Program
     static async ValueTask<string> InsertOneCat(IMongoDatabase db, string name)
     {
         IMongoCollection<Cat> catsCollection = db.GetCollection<Cat>("cats");
-        await catsCollection.InsertOneAsync(new Cat { name = name });
-        return name;
+        int age = Random.Shared.Next(1, 20);
+        await catsCollection.InsertOneAsync(new Cat(name, age));
+        return $"name: {name}, age: {age}";
     }
 
     /// <summary> 从名为 cats 的 Collection 中获取所有 Cat 类型的 Document </summary>
@@ -67,7 +68,7 @@ internal class Program
 
         foreach (Cat? cat in allCats.ToEnumerable())
             if (cat is not null)
-                sb.AppendLine($"name: {cat.name}, id: {cat.id}");
+                sb.AppendLine($"name: {cat.name}, age: {cat.age}, id: {cat.id}");
 
         string result = sb.ToString();
         if (string.IsNullOrEmpty(result))
@@ -77,9 +78,11 @@ internal class Program
     }
 }
 
-
 public class Cat
 {
+    public Cat(string name, int age) =>
+        (this.name, this.age) = (name, age);
     public ObjectId id;
     [BsonElement] public string? name;
+    [BsonElement] public int age;
 }
