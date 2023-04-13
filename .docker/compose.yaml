@@ -1,9 +1,9 @@
 # 此文件用于部署, 开发时请使用工程根目录的 compose.yaml
 
 services:
-  web_app:
+  web-app-demo:
     # 使用已经上传 Docker Hub 中的镜像
-    image: whisperpine/web_app:0.1
+    image: whisperpine/web-app-demo:latest
     # 如果意外停止则自动重启
     restart: always
     ports:
@@ -15,22 +15,22 @@ services:
     # 将容器实例内的 /publish 路径设置为工作路径
     working_dir: /publish
     # 容器实例启动时在工作路径执行命令
-    command: dotnet WebApp.dll
+    command: dotnet WebAppDemo.dll
 
   mongo_db:
     # 使用 MongoDB 官方镜像
-    image: mongo
+    image: mongo:6.0
     # 如果意外停止则自动重启
     restart: always
     volumes:
-      # 将宿主系统中名为 mongo_data_db 的 volume 映射到容器的 /data/db 路径中
+      # 将宿主系统中名为 mongo-data-db 的 volume 映射到容器的 /data/db 路径中
       # mongo_db 所存储的数据应该被映射到容器外部, 这样才能持久化存储
-      - mongo_data_db:/data/db
-      # 将宿主系统中名为 mongo_config_db 的 volume 映射到容器的 /data/configdb 路径中
-      - mongo_config_db:/data/configdb
+      - mongo-data-db:/data/db
+      # 将宿主系统中名为 mongo-config-db 的 volume 映射到容器的 /data/configdb 路径中
+      - mongo-config-db:/data/configdb
 
 volumes:
-  # 在宿主系统中创建名为 mongo_data_db 的 volume, 存放数据库的数据
-  mongo_data_db: {}
-  # 在宿主系统中创建名为 mongo_config_db 的 volume, 存放数据库的配置
-  mongo_config_db: {}
+  # 在宿主系统中创建名为 mongo-data-db 的 volume, 存放数据库的数据
+  mongo-data-db: {}
+  # 在宿主系统中创建名为 mongo-config-db 的 volume, 存放数据库的配置
+  mongo-config-db: {}

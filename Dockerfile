@@ -25,5 +25,5 @@ WORKDIR /publish
 COPY --from=builder /publish .
 # 暴露 3000 端口
 EXPOSE 3000
-# 在工作目录中执行 dotnet WebApp.dll 命令
-CMD [ "dotnet", "WebApp.dll" ]
+# 在工作目录中执行 dotnet WebAppDemo.dll 命令
+CMD [ "dotnet", "WebAppDemo.dll" ]
