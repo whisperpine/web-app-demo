@@ -19,7 +19,7 @@ services:
 
   mongo_db:
     # 使用 MongoDB 官方镜像
-    image: mongo
+    image: mongo:6.0
     # 如果意外停止则自动重启
     restart: always
     volumes:

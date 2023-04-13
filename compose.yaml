@@ -24,7 +24,7 @@ services:
 
   mongo_db:
     # 使用 MongoDB 官方镜像
-    image: mongo
+    image: mongo:6.0
     volumes:
       # 将宿主系统中名为 mongo-data-db 的 volume 映射到容器的 /data/db 路径中
       # mongo_db 所存储的数据应该被映射到容器外部, 这样才能持久化存储
