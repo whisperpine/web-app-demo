@@ -15,19 +15,19 @@ services:
       - 80:3000
     environment:
       # 设置环境变量, 用于访问 MongoDB 容器实例
-      # 注意 mongo_db 这个名字在下面有定义
-      MONGODB_URI: mongodb://mongo_db:27017/
+      # 注意 mongo 这个名字在下面有定义
+      MONGODB_URI: mongodb://mongo:27017/
     # 将容器实例内的 /src 路径设置为工作路径
     working_dir: /src
     # 容器实例启动时在工作路径执行命令
     command: dotnet run
 
-  mongo_db:
+  mongo:
     # 使用 MongoDB 官方镜像
     image: mongo:6.0
     volumes:
       # 将宿主系统中名为 mongo-data-db 的 volume 映射到容器的 /data/db 路径中
-      # mongo_db 所存储的数据应该被映射到容器外部, 这样才能持久化存储
+      # mongo 所存储的数据应该被映射到容器外部, 这样才能持久化存储
       - mongo-data-db:/data/db
       # 将宿主系统中名为 mongo-config-db 的 volume 映射到容器的 /data/configdb 路径中
       - mongo-config-db:/data/configdb
