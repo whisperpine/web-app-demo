@@ -14,9 +14,10 @@ services:
       # 将宿主系统的 80 端口与容器实例的 3000 端口绑定
       - 80:3000
     environment:
-      # 设置环境变量, 用于访问 MongoDB 容器实例
-      # 注意 mongo 这个名字在下面有定义
+      # 设置环境变量, 用于访问 MongoDB 容器实例 (注意 mongo 这个名字在下面有定义)
       MONGODB_URI: mongodb://mongo:27017/
+      # 设置环境变量, 用于指定应用程序所读写的 database 名称
+      DB_NAME: web-app-demo
     # 将容器实例内的 /src 路径设置为工作路径
     working_dir: /src
     # 容器实例启动时在工作路径执行命令

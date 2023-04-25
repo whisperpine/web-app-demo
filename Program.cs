@@ -35,15 +35,18 @@ internal class Program
     static IMongoDatabase ConnectToMongoDB()
     {
         // 从环境变量 MONGODB_URI 中获取 uri
-        string? mongoDbUri = Environment.GetEnvironmentVariable("MONGODB_URI");
-        if (mongoDbUri is null)
-            throw new Exception("Please set environment variable MONGODB_URI");
+        string mongoDbUri = Environment.GetEnvironmentVariable("MONGODB_URI")
+            ?? throw new Exception("Please set environment variable MONGODB_URI");
 
         // 通过 uri 连接 MongoDB
         MongoClient client = new(mongoDbUri.Replace("\"", ""));
 
+        // 通过环境变量 DB_NAME 获取数据库的名称
+        string dbName = Environment.GetEnvironmentVariable("DB_NAME")
+            ?? throw new Exception("Please set environment variable DB_NAME");
+
         // 获取或创建名为 demo 的数据库
-        IMongoDatabase demoDb = client.GetDatabase("demo");
+        IMongoDatabase demoDb = client.GetDatabase(dbName);
         return demoDb;
     }
 
