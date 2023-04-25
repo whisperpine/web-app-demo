@@ -7,7 +7,7 @@ FROM mcr.microsoft.com/dotnet/sdk:6.0 AS builder
 WORKDIR /src
 # 先将工程设置文件 .csproj 复制过去
 COPY *.csproj .
-# 根据 .csproj 文件来拉取可能存在的 nuget package
+# 根据 .csproj 文件来拉取可能存在的 nuget package 依赖
 RUN dotnet restore
 # 将整个工程都复制过去 (除了那些被 .dockerignore 忽略的)
 COPY . .
@@ -23,6 +23,10 @@ FROM mcr.microsoft.com/dotnet/aspnet:6.0 as runtime
 WORKDIR /publish
 # 将那些在上一个容器中被编译好的文件，复制到新的容器的工作路径中
 COPY --from=builder /publish .
+# 设置环境变量 MONGODB_URI 的默认值
+ENV MONGODB_URI=mongodb://mongo:27017/
+# 设置环境变量 DB_NAME 的默认值
+ENV DB_NAME=web-app-demo
 # 暴露 3000 端口
 EXPOSE 3000
 # 在工作目录中执行 dotnet WebAppDemo.dll 命令
