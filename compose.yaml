@@ -13,6 +13,9 @@ services:
     ports:
       # 将宿主系统的 80 端口与容器实例的 3000 端口绑定
       - 80:3000
+    depends_on:
+      # 让 mongo 在 up 时更早启动, down 时更晚关闭
+      - mongo
     environment:
       # 设置环境变量, 用于访问 MongoDB 容器实例 (注意 mongo 这个名字在下面有定义)
       MONGODB_URI: mongodb://mongo:27017/
