@@ -65,7 +65,7 @@ internal class Program
         IMongoCollection<Cat> catsCollection = db.GetCollection<Cat>("cats");
         // 不设置筛选条件, 因此会找到 Collection 内所有的 Document
         FilterDefinition<Cat> filter = Builders<Cat>.Filter.Empty;
-        var allCats = await catsCollection.FindAsync(filter);
+        IAsyncCursor<Cat> allCats = await catsCollection.FindAsync(filter);
 
         System.Text.StringBuilder sb = new();
 
