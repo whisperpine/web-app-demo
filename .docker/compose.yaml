@@ -17,8 +17,6 @@ services:
       MONGODB_URI: mongodb://mongo:27017/
       # 设置环境变量, 用于指定应用程序所读写的 database 名称
       DB_NAME: web-app-demo
-    # 将容器实例内的 /publish 路径设置为工作路径
-    working_dir: /publish
 
   mongo:
     # 使用 MongoDB 官方镜像
